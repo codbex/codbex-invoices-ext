@@ -1,10 +1,10 @@
-exports.getDialogWindow = function () {
+exports.getAction = function () {
     return {
         id: 'wizard-helper',
         label: 'Wizard',
         perspective: 'purchaseinvoice',
         view: "PurchaseInvoice",
-        type: "entity",
-        link: '/services/web/codbex-invoice-ext/wizard/index.html'
+        type: "page",
+        link: '/services/web/codbex-invoices-ext/wizard/index.html'
     }
 }
