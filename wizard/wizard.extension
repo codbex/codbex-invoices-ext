@@ -1,0 +1,5 @@
+{
+    "extensionPoint": "codbex-invoices-custom-action",
+    "module": "codbex-invoices-ext/wizard/view.js",
+    "description": "Wizard"
+}
