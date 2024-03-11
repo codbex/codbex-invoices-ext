@@ -1,188 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="widgets" ng-controller="WidgetsViewController">
 
     <head>
         <meta charset="utf-8" />
-        <title>Generate Goods Issue</title>
-
-        <style>
-            .order-box {
-                max-width: 800px;
-                margin: auto;
-                padding: 30px;
-                border: 1px solid #eee;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-                font-size: 16px;
-                line-height: 24px;
-                font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-                color: #555;
-            }
-
-            .order-jumbo {
-                text-align: center;
-                font-size: 3em;
-                font-weight: bold;
-                color: gray;
-                margin-bottom: 20px;
-            }
-
-            .button {
-                background-color: #4CAF50;
-                border: none;
-                color: white;
-                padding: 16px 32px;
-                text-align: center;
-                font-size: 16px;
-                margin: 4px 2px;
-                opacity: 0.6;
-                transition: 0.3s;
-                display: inline-block;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-            .red-button {
-                background-color: red;
-            }
-
-            .button:hover {
-                opacity: 1;
-            }
-
-            .dialog {
-                display: none;
-                position: fixed;
-                z-index: 1000;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                overflow: auto;
-                background-color: rgba(0, 0, 0, 0.4);
-            }
-
-            .dialog-content {
-                background-color: #fefefe;
-                margin: 15% auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%;
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                animation-name: animatetop;
-                animation-duration: 0.4s
-            }
-
-            .dialog-buttons {
-                text-align: center;
-            }
-
-            @keyframes animatetop {
-                from {
-                    top: -300px;
-                    opacity: 0
-                }
-
-                to {
-                    top: 0;
-                    opacity: 1
-                }
-            }
-
-        </style>
+        <title>Purchase Invoice Wizard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Fake favicon to silent console errors and not waste a get request -->
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
+        <!-- Title directive -->
+        <title dg-view-title></title>
+        <!-- View data -->
+        <script type="text/javascript" src="view.js"></script>
+        <!-- IDE Core UI -->
+        <script type="text/javascript" src="/services/js/resources-core/services/loader.js?id=ide-view-js"></script>
+        <link type="text/css" rel="stylesheet" href="/services/js/resources-core/services/loader.js?id=ide-view-css" />
+        <theme></theme>
+        <!-- Project-specific stuff -->
+        <script type="text/javascript" src="controller.js"></script>
     </head>
 
-    <body ng-app="templateApp" ng-controller="templateContoller">
-        <div class="dialog" id="dialog">
-            <div ng-show="showDialog" class="dialog-content">
-                <h2 class="order-jumbo">Generate Goods Issue</h2>
-                <p>Are you sure you want to generate the GoodsIssue ?</p>
-                <div class="dialog-buttons">
-                    <button ng-click="generateGoodsIssue()" class="button">Yes</button>
-                    <button ng-click="closeDialog()" class="button red-button">No</button>
-                </div>
+    <body>
+        <div class="is-cozy">
+
+            <div dir="ltr">
+                <section class="fd-wizard">
+                    <nav class="fd-wizard__navigation" aria-label="Wizard Navigation 2">
+                        <ul class="fd-wizard__progress-bar fd-wizard__progress-bar--md">
+                            <li class="fd-wizard__step fd-wizard__step--completed">
+                                <div class="fd-wizard__step-wrapper">
+                                    <a class="fd-wizard__step-container" tabindex="0" aria-label="Step 1: One line">
+                                        <span class="fd-wizard__step-indicator">
+                                            <i class="fd-wizard__icon sap-icon--accept" role="presentation"></i>
+                                        </span>
+                                        <div class="fd-wizard__label-container">
+                                            <span class="fd-wizard__label">Step 1: Creating Purchaseinvoice</span>
+                                        </div>
+                                    </a>
+                                    <span class="fd-wizard__connector fd-wizard__connector--active"></span>
+                                </div>
+                            </li>
+                            <li class="fd-wizard__step fd-wizard__step--current">
+                                <div class="fd-wizard__step-wrapper">
+                                    <a class="fd-wizard__step-container" tabindex="0"
+                                        aria-label="Step 2: Very long label that truncates on the second line"
+                                        aria-current="step">
+                                        <span class="fd-wizard__step-indicator">2</span>
+                                        <div class="fd-wizard__label-container">
+                                            <span class="fd-wizard__label">Step 2: Creating a record to the
+                                                purchaseinvoice
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <span class="fd-wizard__connector"></span>
+                                </div>
+                            </li>
+                            <li class="fd-wizard__step fd-wizard__step--upcoming">
+                                <div class="fd-wizard__step-wrapper">
+                                    <a class="fd-wizard__step-container" tabindex="0" aria-label="Step 3: Branching"
+                                        aria-disabled="true">
+                                        <span class="fd-wizard__step-indicator">3</span>
+                                        <div class="fd-wizard__label-container fd-wizard__label-container--optional">
+                                            <span class="fd-wizard__label">Step 3: Adding more records or
+                                                finishing</span>
+                                        </div>
+                                    </a>
+                                    <span class="fd-wizard__connector fd-wizard__connector--branching"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <section class="fd-wizard__content fd-wizard__content--list fd-wizard__content--md"
+                        id="wizard-section-2" style="min-height: 300px;">
+                        <div class="fd-wizard__step-content-container">
+                            <div>
+                                <div class="fd-form-item">
+                                    <label class="fd-form-label fd-form-label--colon fd-form-label--required"
+                                        for="input-1c">Supplier</label>
+                                    <input class="fd-input" type="text" id="input-1c"
+                                        placeholder="Field placeholder text">
+                                </div>
+
+                                <div class="fd-form-item">
+                                    <label class="fd-form-label fd-form-label--colon fd-form-label--required"
+                                        for="input-1c">Currency</label>
+                                    <input class="fd-input" type="text" id="input-1c"
+                                        placeholder="Field placeholder text">
+                                </div>
+
+                                <div class="fd-form-item">
+                                    <label class="fd-form-label fd-form-label--colon fd-form-label--required"
+                                        for="input-1c">PurchaseInvoiceStatus</label>
+                                    <input class="fd-input" type="text" id="input-1c"
+                                        placeholder="Field placeholder text">
+                                </div>
+
+                                <div class="fd-form-item">
+                                    <label class="fd-form-label fd-form-label--colon fd-form-label--required"
+                                        for="input-1c">Operator</label>
+                                    <input class="fd-input" type="text" id="input-1c"
+                                        placeholder="Field placeholder text">
+                                </div>
+                            </div>
+                            <div class="fd-wizard__next-step">
+                                <button class="fd-button fd-button--emphasized">Step 3</button>
+                            </div>
+                        </div>
+                    </section>
+                    <footer>
+                        <div class="fd-bar fd-bar--page-m_l fd-bar--footer">
+                            <div class="fd-bar__right">
+                                <div class="fd-bar__element">
+                                    <button class="fd-button fd-button--transparent">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+
             </div>
         </div>
-
-        <script src="/services/web/angularjs/1.8.2/angular.min.js"></script>
-        <script>
-            const app = angular.module('templateApp', []);
-            app.controller('templateContoller', function ($scope, $http) {
-                let url_string = (window.location.href).toLowerCase();
-                let url = new URL(url_string);
-                let id = url.searchParams.get("id");
-                $scope.showDialog = true;
-
-                const headerUrl = "/services/ts/codbex-orders/gen/api/SalesOrder/SalesOrderService.ts/" + id;
-                $http.get(headerUrl)
-                .then(function(response) {
-                    $scope.Order = response.data;
-                    const itemsUrl = "/services/ts/codbex-orders/gen/api/SalesOrder/SalesOrderItemService.ts?SalesOrder=" + $scope.Order.Id;
-                    $http.get(itemsUrl)
-                    .then(function(response) {
-                        $scope.OrderItems = response.data;
-                        const customerUrl = "/services/ts/codbex-partners/gen/api/Customers/CustomerService.ts/" + $scope.Order.Customer;
-                        $http.get(customerUrl)
-                        .then(function(response) {
-                            $scope.Customer = response.data;
-                        });
-                    });
-                });
-
-                $scope.generateGoodsIssue = function () {
-                    const goodsIssueUrl = "/services/ts/codbex-inventory/gen/api/GoodsIssues/GoodsIssueService.ts/";
-                    const entity = {
-                        "Net": $scope.Order.Net,
-                        "Currency": $scope.Order.Currency,
-                        "Gross": $scope.Order.Gross,
-                        "VAT": $scope.Order.VAT,
-                        "Reference": $scope.Order.UUID
-                    };
-
-                    $http.post(goodsIssueUrl, entity)
-                    .then(function(response) {
-                        $scope.GoodsIssue = response.data
-
-                        //Populate GoodsIssueItems if there are SalesOrderItems
-                        if(!angular.equals($scope.OrderItems, {})){
-                            $scope.OrderItems.forEach(orderItem => {
-                                const goodsIssueItem = {
-                                    "GoodsIssue": $scope.GoodsIssue.Id,
-                                    "Quantity": orderItem.Quantity,
-                                    "UoM": orderItem.UoM,
-                                    "Price": orderItem.Price,
-                                    "Net": orderItem.Net,
-                                    "VAT": orderItem.VAT,
-                                    "Gross": orderItem.Gross
-                                };
-                                const goodsIssueItemUrl = "/services/ts/codbex-inventory/gen/api/GoodsIssues/GoodsIssueItemService.ts/"
-                                $http.post(goodsIssueItemUrl, goodsIssueItem)
-                                .then(function(response) {
-                                })
-                                .catch(function(error) {
-                                });
-                            });
-                        }
-
-                            console.log("GoodsIssue created successfully:", response.data);
-                            alert("GoodsIssue created successfully");
-                        })
-                        .catch(function(error) {
-                            console.error("Error creating GoodsIssue:", error);
-                            alert("Error creating sales GoodsIssue: ");
-                        });
-
-                        $scope.closeDialog();
-                };
-                
-                $scope.closeDialog = function () {
-                     $scope.showDialog = false;
-                };
-
-                // Display the dialog when the page loads
-                document.getElementById("dialog").style.display = "block";
-        });
-        </script>
-
     </body>
 
 </html>
