@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<!--
+  ~ Copyright (c) 2010-2023 SAP and others.
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the Eclipse Public License v2.0
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.eclipse.org/legal/epl-v20.html
+  ~ Contributors:
+  ~ SAP - initial API and implementation
+  -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="widgets" ng-controller="WidgetsViewController">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Fake favicon to silent console errors and not waste a get request -->
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
+        <!-- Title directive -->
+        <title dg-view-title></title>
+        <!-- View data -->
+        <script type="text/javascript" src="view.js"></script>
+        <!-- IDE Core UI -->
+        <script type="text/javascript" src="/services/js/resources-core/services/loader.js?id=ide-view-js"></script>
+        <link type="text/css" rel="stylesheet" href="/services/js/resources-core/services/loader.js?id=ide-view-css" />
+        <theme></theme>
+        <!-- Project-specific stuff -->
+        <script type="text/javascript" src="controller.js"></script>
+    </head>
+
+    <body fd-scrollbar dg-contextmenu="contextMenuContent">
+        <fd-wizard dg-size="md" current-step="wizard.currentStep" completed-steps="wizard.completedSteps">
+            <header>
+                <fd-bar bar-design="header-with-subheader" cozy="true" in-page="true" size="m_l">
+                    <fd-bar-left>
+                        <fd-bar-element>
+                            <h1 fd-title header-size="3">Wizard with steps</h1>
+                        </fd-bar-element>
+                    </fd-bar-left>
+                </fd-bar>
+                <fd-wizard-navigation></fd-wizard-navigation>
+            </header>
+            <fd-wizard-content dg-size="md" style="min-height: 300px;">
+                <fd-wizard-step dg-size="md" dg-label=" Step 1: Create Purchaseinvoice " indicator-label="1"
+                    indicator-glyph="{{ getIndicatorGlyph(1) }}" step-click="gotoStep(step)">
+                    <div>
+                        <fd-form-group>
+                            <fd-form-item horizontal="false">
+                                <fd-form-label for="iid1-hover" dg-colon="true" dg-required="true">
+                                    Supplier
+                                </fd-form-label>
+                                <fd-input id="iid1-hover" type="text" is-hover="false" placeholder="Placeholder text">
+                                </fd-input>
+                            </fd-form-item>
+                            <fd-form-item horizontal="false">
+                                <fd-form-label for="iid1-hover" dg-colon="true" dg-required="true">
+                                    Currency
+                                </fd-form-label>
+                                <fd-input id="iid1-hover" type="text" is-hover="false" placeholder="Placeholder text">
+                                </fd-input>
+                            </fd-form-item>
+                            <fd-form-item horizontal="false">
+                                <fd-form-label for="iid1-hover" dg-colon="true" dg-required="true">
+                                    Status
+                                </fd-form-label>
+                                <fd-input id="iid1-hover" type="text" is-hover="false" placeholder="Placeholder text">
+                                </fd-input>
+                            </fd-form-item>
+                            <fd-form-item horizontal="false">
+                                <fd-form-label for="iid1-hover" dg-colon="true" dg-required="true">
+                                    Operator
+                                </fd-form-label>
+                                <fd-input id="iid1-hover" type="text" is-hover="false" placeholder="Placeholder text">
+                                </fd-input>
+                            </fd-form-item>
+                        </fd-form-group>
+                    </div>
+                    <fd-button dg-label="Revert" dg-type="emphasized" ng-click="revert(0)" style="margin: 10px 0">
+                    </fd-button>
+                </fd-wizard-step>
+                <fd-wizard-step dg-label=" Step 2: Create a record" indicator-label="2"
+                    indicator-glyph="{{ getIndicatorGlyph(2) }}" step-click="gotoStep(step)">
+                    <div>Step 2 content</div>
+                    <fd-button dg-label="Revert" dg-type="emphasized" ng-click="revert(1)"></fd-button>
+                </fd-wizard-step>
+                <fd-wizard-step dg-label="Step 3" indicator-label="3" indicator-glyph="{{ getIndicatorGlyph(3) }}"
+                    step-click="gotoStep(step)">
+                    <div>Step 3 content</div>
+                    <fd-button dg-label="Revert" dg-type="emphasized" ng-click="revert(2)"></fd-button>
+                </fd-wizard-step>
+                <fd-wizard-step dg-label="Step 4" indicator-label="4" indicator-glyph="{{ getIndicatorGlyph(4) }}"
+                    step-click="gotoStep(step)">
+                    <div>Step 4 content</div>
+                </fd-wizard-step>
+                <fd-wizard-summary>
+                    <div>Summary content</div>
+                </fd-wizard-summary>
+            </fd-wizard-content>
+            <footer>
+                <fd-bar bar-design="footer" in-page="true" size="m_l">
+                    <fd-bar-right>
+                        <fd-bar-element>
+                            <fd-button ng-if="!allStepsCompleted()" dg-label="Previous" compact="true"
+                                ng-click="gotoPreviousStep()">
+                            </fd-button>
+                        </fd-bar-element>
+                        <fd-bar-element>
+                            <fd-button ng-if="!allStepsCompleted()" dg-label="{{ isLastStep() ? 'Finish' : 'Next' }}"
+                                dg-type="emphasized" compact="true" ng-click="gotoNextStep()"></fd-button>
+                        </fd-bar-element>
+                        <fd-bar-element>
+                            <fd-button ng-if="!allStepsCompleted()" dg-label="Cancel" dg-type="transparent"
+                                compact="true"></fd-button>
+                        </fd-bar-element>
+                    </fd-bar-right>
+                </fd-bar>
+            </footer>
+        </fd-wizard>
+    </body>
+
+</html>
