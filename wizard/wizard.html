@@ -25,6 +25,7 @@
         <theme></theme>
         <!-- Project-specific stuff -->
         <script type="text/javascript" src="controller.js"></script>
+        <script type="text/javascript" src="components/createNewRecordPage.js"></script>
     </head>
 
     <body fd-scrollbar dg-contextmenu="contextMenuContent">
@@ -39,10 +40,10 @@
                 </fd-bar>
                 <fd-wizard-navigation></fd-wizard-navigation>
             </header>
-            <fd-wizard-content dg-size="md" style="min-height: 300px;">
+            <fd-wizard-content dg-size="md" style="min-height: 300px;" id="wizard-content">
                 <fd-wizard-step dg-size="md" dg-label=" Step 1: Create Purchaseinvoice " indicator-label="1"
                     indicator-glyph="{{ getIndicatorGlyph(1) }}" step-click="gotoStep(step)">
-                    <div>
+                    <div id="create-component">
                         <fd-form-group>
                             <fd-form-item horizontal="false">
                                 <fd-form-label for="iid1-hover" dg-colon="true" dg-required="true">
@@ -79,17 +80,11 @@
                 </fd-wizard-step>
                 <fd-wizard-step dg-label=" Step 2: Create a record" indicator-label="2"
                     indicator-glyph="{{ getIndicatorGlyph(2) }}" step-click="gotoStep(step)">
-                    <div>Step 2 content</div>
-                    <fd-button dg-label="Revert" dg-type="emphasized" ng-click="revert(1)"></fd-button>
-                </fd-wizard-step>
-                <fd-wizard-step dg-label="Step 3" indicator-label="3" indicator-glyph="{{ getIndicatorGlyph(3) }}"
-                    step-click="gotoStep(step)">
-                    <div>Step 3 content</div>
-                    <fd-button dg-label="Revert" dg-type="emphasized" ng-click="revert(2)"></fd-button>
-                </fd-wizard-step>
-                <fd-wizard-step dg-label="Step 4" indicator-label="4" indicator-glyph="{{ getIndicatorGlyph(4) }}"
-                    step-click="gotoStep(step)">
-                    <div>Step 4 content</div>
+                    <div id="create-component">
+                        <fd-button dg-label="Add Item" dg-size="md" dg-type="emphasized"
+                            onclick="createNewRecordPage()">
+                        </fd-button>
+                    </div>
                 </fd-wizard-step>
                 <fd-wizard-summary>
                     <div>Summary content</div>
