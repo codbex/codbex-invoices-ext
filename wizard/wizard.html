@@ -40,10 +40,10 @@
                 </fd-bar>
                 <fd-wizard-navigation></fd-wizard-navigation>
             </header>
-            <fd-wizard-content dg-size="md" style="min-height: 300px;" id="wizard-content">
+            <fd-wizard-content dg-size="md" style="min-height: 300px;" class="wizard-content">
                 <fd-wizard-step dg-size="md" dg-label=" Step 1: Create Purchaseinvoice " indicator-label="1"
                     indicator-glyph="{{ getIndicatorGlyph(1) }}" step-click="gotoStep(step)">
-                    <div id="create-component">
+                    <div class="create-component">
                         <fd-form-group>
                             <fd-form-item horizontal="false">
                                 <fd-form-label for="iid1-hover" dg-colon="true" dg-required="true">
@@ -80,7 +80,7 @@
                 </fd-wizard-step>
                 <fd-wizard-step dg-label=" Step 2: Create a record" indicator-label="2"
                     indicator-glyph="{{ getIndicatorGlyph(2) }}" step-click="gotoStep(step)">
-                    <div id="create-component">
+                    <div class="create-component">
                         <fd-button dg-label="Add Item" dg-size="md" dg-type="emphasized"
                             onclick="createNewRecordPage()">
                         </fd-button>

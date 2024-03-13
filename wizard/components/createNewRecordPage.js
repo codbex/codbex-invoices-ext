@@ -2,7 +2,7 @@
 function createNewRecordPage() {
     console.log("test");
 
-    let innerHTML = `
+    let recordPageHtml = `
         <fd-form-item horizontal="false">
             <fd-form-label for="iid1-hover" dg-colon="true" dg-required="true">
                 Supplier
@@ -31,11 +31,9 @@ function createNewRecordPage() {
             <fd-input id="iid1-hover" type="text" is-hover="false" placeholder="Placeholder text">
             </fd-input>
         </fd-form-item>
-    <script type="text/javascript" src="controller.js"></script>
-    dfg
     `
 
-    let nextStep = `
+    let nextStepHtml = `
         <fd-wizard-step dg-label=" Step 2: Create a record" indicator-label="2"
             indicator-glyph="{{ getIndicatorGlyph(2) }}" step-click="gotoStep(step)">
             <div id="create-component">
@@ -43,15 +41,14 @@ function createNewRecordPage() {
                 </fd-button>
             </div>
         </fd-wizard-step>
-        <script type="text/javascript" src="controller.js"></script>
-        asd
     `
 
+    let componentDiv = document.querySelectorAll(".create-component");
+    console.log(componentDiv)
+    componentDiv.length > 0 ? componentDiv[componentDiv.length - 1].innerHTML = recordPageHtml : "";
 
-    //* Remove typescript warning
-    let componentDiv = document.getElementById("create-component");
-    componentDiv ? componentDiv.innerHTML = innerHTML : "";
-
-    let wizardContent = document.getElementById("wizard-content");
-    wizardContent ? wizardContent.innerHTML += nextStep : "";
+    // let wizardContent = document.querySelectorAll(".wizard-content");
+    // console.log(wizardContent[0].innerHTML)
+    // wizardContent.length > 0 ? wizardContent[wizardContent.length - 1].innerHTML += nextStepHtml : "";
+    // console.log(wizardContent[0].innerHTML)
 }
