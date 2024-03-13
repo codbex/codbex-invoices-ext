@@ -16,7 +16,7 @@
         <!-- Fake favicon to silent console errors and not waste a get request -->
         <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
         <!-- Title directive -->
-        <title dg-view-title></title>
+        <title dg-view-title="Wizard"></title>
         <!-- View data -->
         <script type="text/javascript" src="view.js"></script>
         <!-- IDE Core UI -->
@@ -25,7 +25,6 @@
         <theme></theme>
         <!-- Project-specific stuff -->
         <script type="text/javascript" src="controller.js"></script>
-        <script type="text/javascript" src="components/createNewRecordPage.js"></script>
     </head>
 
     <body fd-scrollbar dg-contextmenu="contextMenuContent">
@@ -34,15 +33,17 @@
                 <fd-bar bar-design="header-with-subheader" cozy="true" in-page="true" size="m_l">
                     <fd-bar-left>
                         <fd-bar-element>
-                            <h1 fd-title header-size="3">Wizard with steps</h1>
+                            <h1 fd-title header-size="3">Wizard for Purchase Invoice</h1>
                         </fd-bar-element>
                     </fd-bar-left>
                 </fd-bar>
                 <fd-wizard-navigation></fd-wizard-navigation>
             </header>
             <fd-wizard-content dg-size="md" style="min-height: 300px;" class="wizard-content">
-                <fd-wizard-step dg-size="md" dg-label=" Step 1: Create Purchaseinvoice " indicator-label="1"
-                    indicator-glyph="{{ getIndicatorGlyph(1) }}" step-click="gotoStep(step)">
+                <fd-wizard-step dg-size="md" dg-label=" Step 1: Create Purchaseinvoice "
+                    indicator-label="{{wizard.currentStep.id}}"
+                    indicator-glyph="{{ getIndicatorGlyph(wizard.currentStep.id) }}"
+                    step-click="gotoStep(wizard.currentStep)">
                     <div class="create-component">
                         <fd-form-group>
                             <fd-form-item horizontal="false">
@@ -78,25 +79,23 @@
                     <fd-button dg-label="Revert" dg-type="emphasized" ng-click="revert(0)" style="margin: 10px 0">
                     </fd-button>
                 </fd-wizard-step>
-                <fd-wizard-step dg-label=" Step 2: Create a record" indicator-label="2"
-                    indicator-glyph="{{ getIndicatorGlyph(2) }}" step-click="gotoStep(step)">
-                    <div class="create-component">
-                        <fd-button dg-label="Add Item" dg-size="md" dg-type="emphasized"
-                            onclick="createNewRecordPage()">
-                        </fd-button>
-                    </div>
-                </fd-wizard-step>
-                <fd-wizard-summary>
+                <dynamic-wizard-step step-count="2"></dynamic-wizard-step>
+                <dynamic-wizard-step step-count="3"></dynamic-wizard-step>
+                <!-- <fd-wizard-summary>
                     <div>Summary content</div>
-                </fd-wizard-summary>
+                </fd-wizard-summary> -->
             </fd-wizard-content>
             <footer>
                 <fd-bar bar-design="footer" in-page="true" size="m_l">
                     <fd-bar-right>
                         <fd-bar-element>
-                            <fd-button ng-if="!allStepsCompleted()" dg-label="Previous" compact="true"
+                            <fd-button ng-if="!allStepsCompleted() && !isFirstStep()" dg-label="Previous" compact="true"
                                 ng-click="gotoPreviousStep()">
                             </fd-button>
+                        </fd-bar-element>
+                        <fd-bar-element>
+                            <fd-button ng-if="isLastStep()" dg-label="Add Item" dg-type="emphasized" compact="true"
+                                ng-click="createNewRecordPage()"></fd-button>
                         </fd-bar-element>
                         <fd-bar-element>
                             <fd-button ng-if="!allStepsCompleted()" dg-label="{{ isLastStep() ? 'Finish' : 'Next' }}"
