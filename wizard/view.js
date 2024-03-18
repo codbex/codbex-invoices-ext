@@ -5,6 +5,6 @@ exports.getAction = function () {
         perspective: 'purchaseinvoice',
         view: "PurchaseInvoice",
         type: "page",
-        link: '/services/web/codbex-invoices-ext/wizard/index.html'
+        link: '/services/web/codbex-invoices-ext/wizard/wizard.html'
     }
 }
