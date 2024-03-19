@@ -12,12 +12,35 @@ widgetsView.directive('dynamicWizardStep', function ($compile) {
             <fd-wizard-step dg-size="md" ng-attr-dg-label="{{ 'Step ' + stepCount + ': Create a record' }}" ng-attr-indicator-label="{{ stepCount }}"
                 ng-attr-indicator-glyph="{{ getIndicatorGlyph(stepCount) }}" step-click="gotoStep(stepCount)">
                 <div id="create-component">
-                    <fd-form-item horizontal="false">
-                        <fd-form-label for="iid1-hover" dg-colon="true" dg-required="true">
-                            Supplier
+                     <fd-form-item horizontal="false">
+                        <fd-form-label for="idProduct" dg-required="true" dg-colon="true">Product
                         </fd-form-label>
-                        <fd-input id="iid1-hover" type="text" is-hover="false" placeholder="Placeholder text">
-                        </fd-input>
+                        <fd-combobox-input id="idProduct" name="Product"
+                            state="{{ forms.details['Product'].$valid ? '' : 'error' }}" ng-required="true"
+                            ng-model="entity.Product" dg-disabled="action === 'select'"
+                            dropdown-items="optionsProduct" dg-placeholder="Search Product ...">
+                        </fd-combobox-input>
+                    </fd-form-item>
+                    <fd-form-item horizontal="false">
+                        <fd-form-label for="idQuantity" dg-required="true" dg-colon="true">Quantity
+                        </fd-form-label>
+                        <fd-step-input dg-id="iis1" name="iisQuantity" ng-model="stepInputValue" dg-min="0" dg-max="10"
+								dg-step="1" state="error">
+                    </fd-form-item>
+                    <fd-form-item horizontal="false">
+                        <fd-form-label for="idUoM" dg-required="true" dg-colon="true">UoM
+                        </fd-form-label>
+                        <fd-combobox-input id="idUoM" name="UoM"
+                            state="{{ forms.details['UoM'].$valid ? '' : 'error' }}" ng-required="true"
+                            ng-model="entity.UoM" dg-disabled="action === 'select'"
+                            dropdown-items="optionsUoM" dg-placeholder="Search UoM ...">
+                        </fd-combobox-input>
+                    </fd-form-item>
+                    <fd-form-item horizontal="false">
+                        <fd-form-label for="idPrice" dg-required="true" dg-colon="true">Price
+                        </fd-form-label>
+                        <fd-step-input dg-id="iis2" name="iisPrice" ng-model="stepInputValue" dg-min="0" dg-max="10000"
+								dg-step="1" state="error">
                     </fd-form-item>
                 </div>
             </fd-wizard-step>
