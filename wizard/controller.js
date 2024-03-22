@@ -4,16 +4,16 @@ widgetsView.config(["messageHubProvider", function (messageHubProvider) {
     messageHubProvider.eventIdPrefix = 'template';
 }]);
 
-widgetsView.config(["entityApiProvider", function (entityApiProvider) {
-    entityApiProvider.baseUrl = "/services/ts/codbex-invoices/gen/api/purchaseinvoice/PurchaseInvoiceService.ts";
-}])
+// widgetsView.config(["entityApiProvider", function (entityApiProvider) {
+//     entityApiProvider.baseUrl = "/services/ts/codbex-invoices/gen/api/purchaseinvoice/PurchaseInvoiceService.ts";
+// }])
 
 widgetsView.directive('dynamicWizardStep', function ($compile) {
     return {
         restrict: 'E',
         scope: {},
         template: `
-            <fd-wizard-step dg-size="md" ng-attr-dg-label="{{ 'Step ' + stepCount + ': Create a record' }}" ng-attr-indicator-label="{{ stepCount }}"
+            <fd-wizard-step fd-scrollbar dg-size="md" ng-attr-dg-label="{{ 'Step ' + stepCount + ': Create a record' }}" ng-attr-indicator-label="{{ stepCount }}"
                 ng-attr-indicator-glyph="{{ getIndicatorGlyph(stepCount) }}" step-click="gotoStep(stepCount)">
                 <div id="create-component">
                      <fd-form-item horizontal="false">
@@ -66,8 +66,15 @@ widgetsView.directive('dynamicWizardStep', function ($compile) {
     };
 });
 
+// {
+//     value: ,
+//     text: ""
+// }
+// $scope.dijest()
+// $scope.apply() **
+
 // Initialize controller
-widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http', 'entityApi', function ($scope, messageHub, $http, entityApi) {
+widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http', function ($scope, messageHub, $http) {
 
     messageHub.onDidReceiveMessage("clearDetails", function (msg) {
         $scope.$apply(function () {
