@@ -20,6 +20,8 @@ widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http'
     $scope.optionsSentMethod = [];
     $scope.optionsPurchaseinvoiceStatus = [];
     $scope.optionsOperator = [];
+    $scope.optionsProduct = [];
+    $scope.optionsUoM = [];
 
     $http.get("/services/ts/codbex-partners/gen/api/Suppliers/SupplierService.ts").then((response) => {
         $scope.optionsSupplier = response.data.map(function (supplier) {
@@ -54,6 +56,18 @@ widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http'
     $http.get("/services/ts/codbex-employees/gen/api/Employees/EmployeeService.ts").then((response) => {
         $scope.optionsOperator = response.data.map(function (operator) {
             return { value: operator.Id, text: operator.FirstName };
+        })
+    })
+
+    $http.get("/services/ts/codbex-products/gen/api/Products/ProductService.ts").then((response) => {
+        $scope.optionsProduct = response.data.map(function (product) {
+            return { value: product.Id, text: product.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-uoms/gen/api/UnitsOfMeasures/UoMService.ts").then((response) => {
+        $scope.optionsUoM = response.data.map(function (UoM) {
+            return { value: UoM.Id, text: UoM.Name };
         })
     })
 
