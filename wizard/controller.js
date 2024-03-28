@@ -11,7 +11,23 @@ widgetsView.config(["messageHubProvider", function (messageHubProvider) {
 widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http', function ($scope, messageHub, $http) {
 
     $scope.entity = {
-        Supplier: null
+        Date: null,
+        Due: null,
+        Supplier: null,
+        Currency: null,
+        PaymentMethod: null,
+        SentMethod: null,
+        PurchaseinvoiceStatus: null,
+        Operator: null,
+        Product: null,
+        Quantity: null,
+        UoM: null,
+        Price: null
+    };
+
+    $scope.forms = {
+        purchaseinvoice: {},
+        record: {}
     };
 
     $scope.optionsSupplier = [];
@@ -22,6 +38,17 @@ widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http'
     $scope.optionsOperator = [];
     $scope.optionsProduct = [];
     $scope.optionsUoM = [];
+
+    $scope.isFormValid = function () {
+        if ($scope.forms.wizard) {
+            if ($scope.forms.wizard.$valid === true || $scope.forms.wizard.$valid === undefined) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    };
 
     $http.get("/services/ts/codbex-partners/gen/api/Suppliers/SupplierService.ts").then((response) => {
         $scope.optionsSupplier = response.data.map(function (supplier) {
