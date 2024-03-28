@@ -15,18 +15,47 @@ widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http'
     };
 
     $scope.optionsSupplier = [];
+    $scope.optionsCurrency = [];
+    $scope.optionsPaymentMethod = [];
+    $scope.optionsSentMethod = [];
+    $scope.optionsPurchaseinvoiceStatus = [];
+    $scope.optionsOperator = [];
 
     $http.get("/services/ts/codbex-partners/gen/api/Suppliers/SupplierService.ts").then((response) => {
         $scope.optionsSupplier = response.data.map(function (supplier) {
-            return { value: supplier.Name, text: supplier.Name };
+            return { value: supplier.Id, text: supplier.Name };
         })
     })
 
-    $scope.onComboboxChange = function () {
-        console.log("Selected Supplier:", $scope.entity.Supplier);
-        debugger
-        $scope.$valid = true
-    };
+    $http.get("/services/ts/codbex-currencies/gen/api/Currencies/CurrencyService.ts").then((response) => {
+        $scope.optionsCurrency = response.data.map(function (currency) {
+            return { value: currency.Id, text: currency.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-methods/gen/api/Methods/PaymentMethodService.ts").then((response) => {
+        $scope.optionsPaymentMethod = response.data.map(function (paymentMethod) {
+            return { value: paymentMethod.Id, text: paymentMethod.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-methods/gen/api/Methods/SentMethodService.ts").then((response) => {
+        $scope.optionsSentMethod = response.data.map(function (sentMethod) {
+            return { value: sentMethod.Id, text: sentMethod.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-invoices/gen/api/settings/PurchaseInvoiceStatusService.ts").then((response) => {
+        $scope.optionsPurchaseinvoiceStatus = response.data.map(function (purchaseinvoiceStatus) {
+            return { value: purchaseinvoiceStatus.Id, text: purchaseinvoiceStatus.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-employees/gen/api/Employees/EmployeeService.ts").then((response) => {
+        $scope.optionsOperator = response.data.map(function (operator) {
+            return { value: operator.Id, text: operator.FirstName };
+        })
+    })
 
     $scope.steps = [
         { id: 1, name: "Create a Purchase Invoice", topicId: "template.widgets.screeen.one" }
