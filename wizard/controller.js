@@ -3,14 +3,6 @@ let widgetsView = angular.module('widgets', ['ideUI', 'ideView']);
 widgetsView.config(["messageHubProvider", function (messageHubProvider) {
     messageHubProvider.eventIdPrefix = 'template';
 }]);
-
-// widgetsView.config(["entityApiProvider", function (entityApiProvider) {
-//     entityApiProvider.baseUrl = "/services/ts/codbex-invoices/gen/api/purchaseinvoice/PurchaseInvoiceService.ts";
-// }])
-
-// {
-//     value: ,
-//     text: ""
 // }
 // $scope.dijest()
 // $scope.apply() **
@@ -18,73 +10,93 @@ widgetsView.config(["messageHubProvider", function (messageHubProvider) {
 // Initialize controller
 widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http', function ($scope, messageHub, $http) {
 
-    messageHub.onDidReceiveMessage("clearDetails", function (msg) {
-        $scope.$apply(function () {
-            $scope.entity = {};
-            $scope.optionsSupplier = [];
-            $scope.optionsCurrency = [];
-            $scope.optionsPaymentMethod = [];
-            $scope.optionsSentMethod = [];
-            $scope.optionsPurchaseInvoiceStatus = [];
-            $scope.optionsOperator = [];
-            $scope.optionsCompany = [];
-            $scope.action = 'select';
-        });
-    });
+    $scope.entity = {
+        Date: null,
+        Due: null,
+        Supplier: null,
+        Currency: null,
+        PaymentMethod: null,
+        SentMethod: null,
+        PurchaseinvoiceStatus: null,
+        Operator: null,
+        Product: null,
+        Quantity: null,
+        UoM: null,
+        Price: null
+    };
 
-    messageHub.onDidReceiveMessage("entitySelected", function (msg) {
-        $scope.$apply(function () {
-            if (msg.data.entity.Date) {
-                msg.data.entity.Date = new Date(msg.data.entity.Date);
-            }
-            if (msg.data.entity.Due) {
-                msg.data.entity.Due = new Date(msg.data.entity.Due);
-            }
-            $scope.entity = msg.data.entity;
-            $scope.optionsSupplier = msg.data.optionsSupplier;
-            $scope.optionsCurrency = msg.data.optionsCurrency;
-            $scope.optionsPaymentMethod = msg.data.optionsPaymentMethod;
-            $scope.optionsSentMethod = msg.data.optionsSentMethod;
-            $scope.optionsPurchaseInvoiceStatus = msg.data.optionsPurchaseInvoiceStatus;
-            $scope.optionsOperator = msg.data.optionsOperator;
-            $scope.optionsCompany = msg.data.optionsCompany;
-            $scope.action = 'select';
-        });
-    });
+    $scope.forms = {
+        purchaseinvoice: {},
+        record: {}
+    };
 
-    messageHub.onDidReceiveMessage("createEntity", function (msg) {
-        $scope.$apply(function () {
-            $scope.entity = {};
-            $scope.optionsSupplier = msg.data.optionsSupplier;
-            $scope.optionsCurrency = msg.data.optionsCurrency;
-            $scope.optionsPaymentMethod = msg.data.optionsPaymentMethod;
-            $scope.optionsSentMethod = msg.data.optionsSentMethod;
-            $scope.optionsPurchaseInvoiceStatus = msg.data.optionsPurchaseInvoiceStatus;
-            $scope.optionsOperator = msg.data.optionsOperator;
-            $scope.optionsCompany = msg.data.optionsCompany;
-            $scope.action = 'create';
-        });
-    });
+    $scope.optionsSupplier = [];
+    $scope.optionsCurrency = [];
+    $scope.optionsPaymentMethod = [];
+    $scope.optionsSentMethod = [];
+    $scope.optionsPurchaseinvoiceStatus = [];
+    $scope.optionsOperator = [];
+    $scope.optionsProduct = [];
+    $scope.optionsUoM = [];
 
-    messageHub.onDidReceiveMessage("updateEntity", function (msg) {
-        $scope.$apply(function () {
-            if (msg.data.entity.Date) {
-                msg.data.entity.Date = new Date(msg.data.entity.Date);
+    $scope.isFormValid = function () {
+        if ($scope.forms.wizard) {
+            if ($scope.forms.wizard.$valid === true || $scope.forms.wizard.$valid === undefined) {
+                return true;
+            } else {
+                return false;
             }
-            if (msg.data.entity.Due) {
-                msg.data.entity.Due = new Date(msg.data.entity.Due);
-            }
-            $scope.entity = msg.data.entity;
-            $scope.optionsSupplier = msg.data.optionsSupplier;
-            $scope.optionsCurrency = msg.data.optionsCurrency;
-            $scope.optionsPaymentMethod = msg.data.optionsPaymentMethod;
-            $scope.optionsSentMethod = msg.data.optionsSentMethod;
-            $scope.optionsPurchaseInvoiceStatus = msg.data.optionsPurchaseInvoiceStatus;
-            $scope.optionsOperator = msg.data.optionsOperator;
-            $scope.optionsCompany = msg.data.optionsCompany;
-            $scope.action = 'update';
-        });
-    });
+        }
+        return false;
+    };
+
+    $http.get("/services/ts/codbex-partners/gen/api/Suppliers/SupplierService.ts").then((response) => {
+        $scope.optionsSupplier = response.data.map(function (supplier) {
+            return { value: supplier.Id, text: supplier.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-currencies/gen/api/Currencies/CurrencyService.ts").then((response) => {
+        $scope.optionsCurrency = response.data.map(function (currency) {
+            return { value: currency.Id, text: currency.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-methods/gen/api/Methods/PaymentMethodService.ts").then((response) => {
+        $scope.optionsPaymentMethod = response.data.map(function (paymentMethod) {
+            return { value: paymentMethod.Id, text: paymentMethod.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-methods/gen/api/Methods/SentMethodService.ts").then((response) => {
+        $scope.optionsSentMethod = response.data.map(function (sentMethod) {
+            return { value: sentMethod.Id, text: sentMethod.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-invoices/gen/api/settings/PurchaseInvoiceStatusService.ts").then((response) => {
+        $scope.optionsPurchaseinvoiceStatus = response.data.map(function (purchaseinvoiceStatus) {
+            return { value: purchaseinvoiceStatus.Id, text: purchaseinvoiceStatus.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-employees/gen/api/Employees/EmployeeService.ts").then((response) => {
+        $scope.optionsOperator = response.data.map(function (operator) {
+            return { value: operator.Id, text: operator.FirstName };
+        })
+    })
+
+    $http.get("/services/ts/codbex-products/gen/api/Products/ProductService.ts").then((response) => {
+        $scope.optionsProduct = response.data.map(function (product) {
+            return { value: product.Id, text: product.Name };
+        })
+    })
+
+    $http.get("/services/ts/codbex-uoms/gen/api/UnitsOfMeasures/UoMService.ts").then((response) => {
+        $scope.optionsUoM = response.data.map(function (UoM) {
+            return { value: UoM.Id, text: UoM.Name };
+        })
+    })
 
     $scope.steps = [
         { id: 1, name: "Create a Purchase Invoice", topicId: "template.widgets.screeen.one" }
