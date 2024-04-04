@@ -1,14 +1,20 @@
-let widgetsView = angular.module('widgets', ['ideUI', 'ideView']);
+let widgetsView = angular.module('widgets', ['ideUI', 'ideView', "entityApi"]);
 
 widgetsView.config(["messageHubProvider", function (messageHubProvider) {
     messageHubProvider.eventIdPrefix = 'template';
 }]);
+
+widgetsView.config(["entityApiProvider", function (entityApiProvider) {
+    entityApiProvider.baseUrl = "/services/ts/codbex-invoices/gen/api/purchaseinvoice/PurchaseInvoiceService.ts";
+}])
+
 // }
 // $scope.dijest()
 // $scope.apply() **
 
 // Initialize controller
-widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http', function ($scope, messageHub, $http) {
+
+widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub', 'entityApi', function ($scope, $http, messageHub, entityApi) {
 
     $scope.entity = {
         Date: null,
@@ -19,6 +25,7 @@ widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http'
         SentMethod: null,
         PurchaseinvoiceStatus: null,
         Operator: null,
+
         Product: null,
         Quantity: null,
         UoM: null,
@@ -162,6 +169,11 @@ widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http'
     };
 
     $scope.createNewRecordPage = function () {
+        $scope.entity[`Product_${$scope.records.length}`] = null;
+        $scope.entity[`Quantity_${$scope.records.length}`] = null;
+        $scope.entity[`UoM_${$scope.records.length}`] = null;
+        $scope.entity[`Price_${$scope.records.length}`] = null;
+
         $scope.records.push({ stepCount: $scope.records.length + 1 });
         $scope.steps.push({ id: $scope.steps.length, name: "Create a Purchase Invoice Item", topicId: `template.widgets.screeen.${$scope.steps.length}` });
         $scope.wizard.stepsCount++;
@@ -169,6 +181,32 @@ widgetsView.controller('WidgetsViewController', ['$scope', 'messageHub', '$http'
         // Set the current step to the newly added step
         $scope.gotoNextStep();
         console.log($scope.wizard);
+    };
+
+    //-----------------Events-------------------//
+
+    $scope.finish = function () {
+        //-----Create PurchaseInvoice----//
+        entityApi.create({
+            Date: $scope.entity.Date,
+            Due: $scope.entity.Due,
+            Supplier: $scope.entity.Supplier,
+            Currency: $scope.entity.Currency,
+            PaymentMethod: $scope.entity.PaymentMethod,
+            SentMethod: $scope.entity.SentMethod,
+            PurchaseInvoiceStatus: $scope.entity.PurchaseinvoiceStatus,
+            Operator: $scope.entity.Operator
+        }).then(function (response) {
+            if (response.status != 201) {
+                messageHub.showAlertError("PurchaseInvoice", `Unable to create PurchaseInvoice: '${response.message}'`);
+                return;
+            }
+
+
+            messageHub.postMessage("entityCreated", response.data);
+            messageHub.postMessage("clearDetails", response.data);
+            messageHub.showAlertSuccess("PurchaseInvoice", "PurchaseInvoice successfully created");
+        });
     };
 }]);
 
