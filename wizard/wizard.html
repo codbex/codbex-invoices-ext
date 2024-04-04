@@ -28,7 +28,7 @@
     </head>
 
     <body class="dg-vbox">
-        <fd-wizard class="dg-fill-parant" dg-size="md" current-step="wizard.currentStep"
+        <fd-wizard class="dg-flex--wizard dg-full-height" dg-size="md" current-step="wizard.currentStep"
             completed-steps="wizard.completedSteps">
             <header>
                 <fd-bar bar-design="header-with-subheader" cozy="true" in-page="true" size="m_l">
@@ -40,8 +40,8 @@
                 </fd-bar>
                 <fd-wizard-navigation></fd-wizard-navigation>
             </header>
-            <fd-wizard-content dg-size="md" style="min-height: 300px;" class="wizard-content">
-                <fd-wizard-step fd-scrollbar dg-size="md" dg-label=" Create Purchaseinvoice " indicator-label="1"
+            <fd-wizard-content fd-scrollbar dg-size="md" style="min-height: 300px;" class="wizard-content">
+                <fd-wizard-step dg-size="md" dg-label=" Create Purchaseinvoice " indicator-label="1"
                     indicator-glyph="{{ getIndicatorGlyph(wizard.currentStep.id) }}"
                     step-click="gotoStep(wizard.currentStep)">
                     <div class="create-component">
@@ -139,11 +139,9 @@
                 </fd-wizard-step>
 
                 <!-- All the records -->
-                <fd-wizard-step fd-scrollbar ng-repeat="record in records track by $index" dg-size="md"
+                <fd-wizard-step ng-repeat="record in records track by $index" dg-size="md"
                     ng-attr-dg-label="{{ 'Record ' + record.stepCount + ': Create a record' }}"
-                    ng-attr-indicator-label="{{ record.stepCount }}"
-                    ng-attr-indicator-glyph="{{ getIndicatorGlyph(record.stepCount) }}"
-                    step-click="gotoStep(record.stepCount)">
+                    ng-attr-indicator-label="{{ $index + 2 }}" step-click="gotoStep(record.stepCount)">
                     <div id="create-component">
                         <fd-fieldset ng-form="forms.record">
                             <fd-form-item horizontal="false">
@@ -151,7 +149,7 @@
                                 </fd-form-label>
                                 <fd-combobox-input id="idProduct" name="Product"
                                     state="{{ forms.record['Product'].$valid ? '' : 'error' }}" ng-required="true"
-                                    ng-model="entity.Product_{{record.stepCount}}" dropdown-items="optionsProduct"
+                                    ng-model="record[$index].Product" dropdown-items="optionsProduct"
                                     dg-placeholder="Search Product ..." ng-readonly="action === 'select'">
                                 </fd-combobox-input>
                             </fd-form-item>
@@ -160,7 +158,7 @@
                                 </fd-form-label>
                                 <fd-step-input dg-id="idQuantity" name="Quantity"
                                     state="{{ forms.record['Quantity'].$valid ? '' : 'error' }}" dg-required="true"
-                                    ng-model="entity.Quantity_{{record.stepCount}}" is-readonly="action === 'select'"
+                                    ng-model="record[$index].Quantity" is-readonly="action === 'select'"
                                     placeholder="Enter Quantity">
                                 </fd-step-input>
                             </fd-form-item>
@@ -169,7 +167,7 @@
                                 </fd-form-label>
                                 <fd-combobox-input id="idUoM" name="UoM"
                                     state="{{ forms.record['UoM'].$valid ? '' : 'error' }}" ng-required="true"
-                                    ng-model="entity.UoM_{{record.stepCount}}" dropdown-items="optionsUoM"
+                                    ng-model="record[$index].UoM" dropdown-items="optionsUoM"
                                     dg-placeholder="Search UoM ..." ng-readonly="action === 'select'">
                                 </fd-combobox-input>
                             </fd-form-item>
@@ -178,8 +176,8 @@
                                 </fd-form-label>
                                 <fd-step-input dg-id="idPrice" name="Price"
                                     state="{{ forms.record['Price'].$valid ? '' : 'error' }}" dg-required="true"
-                                    ng-model="entity.Price_{{record.stepCount}}" is-readonly="action === 'select'"
-                                    placeholder="Enter Price">
+                                    ng-model="record[$index].Price" is-readonly=" action==='select'"
+                                    placeholder=" Enter Price">
                                 </fd-step-input>
                             </fd-form-item>
                         </fd-fieldset>

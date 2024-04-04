@@ -26,7 +26,7 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
         PurchaseinvoiceStatus: null,
         Operator: null,
 
-        Product: null,
+        Products: [],
         Quantity: null,
         UoM: null,
         Price: null
@@ -95,6 +95,7 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
 
     $http.get("/services/ts/codbex-products/gen/api/Products/ProductService.ts").then((response) => {
         $scope.optionsProduct = response.data.map(function (product) {
+            console.log(product.Id)
             return { value: product.Id, text: product.Name };
         })
     })
@@ -174,7 +175,7 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
         $scope.entity[`UoM_${$scope.records.length}`] = null;
         $scope.entity[`Price_${$scope.records.length}`] = null;
 
-        $scope.records.push({ stepCount: $scope.records.length + 1 });
+        $scope.records.push({ Product: '', Quantity: '', UoM: '', Price: '' });
         $scope.steps.push({ id: $scope.steps.length, name: "Create a Purchase Invoice Item", topicId: `template.widgets.screeen.${$scope.steps.length}` });
         $scope.wizard.stepsCount++;
 
