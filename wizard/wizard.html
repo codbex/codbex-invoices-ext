@@ -41,7 +41,7 @@
                 <fd-wizard-navigation></fd-wizard-navigation>
             </header>
             <fd-wizard-content fd-scrollbar dg-size="md" style="min-height: 300px;" class="wizard-content">
-                <fd-wizard-step dg-size="md" dg-label=" Create Purchaseinvoice " indicator-label="1"
+                <fd-wizard-step dg-size="md" dg-label="Create Purchaseinvoice " indicator-label="1"
                     indicator-glyph="{{ getIndicatorGlyph(wizard.currentStep.id) }}"
                     step-click="gotoStep(wizard.currentStep)">
                     <div class="create-component">
@@ -138,9 +138,8 @@
                     </div>
                 </fd-wizard-step>
 
-                <!-- All the records -->
-                <fd-wizard-step ng-repeat="record in records track by $index" dg-size="md"
-                    ng-attr-dg-label="{{ 'Record ' + record.stepCount + ': Create a record' }}"
+                <!-- Records Page -->
+                <fd-wizard-step dg-size="md" ng-attr-dg-label="{{ 'Record ' + record.stepCount + ': Create a record' }}"
                     ng-attr-indicator-label="{{ $index + 2 }}" step-click="gotoStep(record.stepCount)">
                     <div id="create-component">
                         <fd-fieldset ng-form="forms.record">
@@ -191,12 +190,6 @@
             </fd-wizard-content>
             <footer>
                 <fd-bar bar-design="footer" in-page="true" size="m_l">
-                    <fd-bar-left>
-                        <fd-bar-element>
-                            <fd-button ng-if="!allStepsCompleted() && !isFirstStep()" dg-label="Cancel"
-                                dg-type="transparent" compact="true"></fd-button>
-                        </fd-bar-element>
-                    </fd-bar-left>
                     <fd-bar-right>
                         <fd-bar-element>
                             <fd-button ng-if="!allStepsCompleted() && !isFirstStep()" dg-label="Previous" compact="true"
@@ -204,15 +197,12 @@
                             </fd-button>
                         </fd-bar-element>
                         <fd-bar-element>
-                            <fd-button ng-if="isLastStep()" dg-label="Add Item" dg-type="emphasized" compact="true"
-                                ng-click="createNewRecordPage()">
-                                <!-- state="{{ isFormValid() ? '' : 'disabled'}}" -->
+                            <!-- state="{{ isFormValid() ? '' : 'disabled'}}" -->
+                            <fd-button state="{{ isFormValid() ? '' : 'disabled'}}" ng-if="!allStepsCompleted()"
+                                dg-label="{{ isLastStep() ? 'Finish' : 'Next' }}" dg-type="emphasized" compact="true"
+                                ng-click="isLastStep() ? finish() : gotoNextStep()">
                             </fd-button>
-                        </fd-bar-element>
-                        <fd-bar-element>
-                            <fd-button ng-if="!allStepsCompleted()" dg-label="{{ isLastStep() ? 'Finish' : 'Next' }}"
-                                dg-type="emphasized" compact="true" ng-click="isLastStep() ? finish() : gotoNextStep()">
-                            </fd-button state="{{ isFormValid() ? '' : 'disabled'}}">
+                            <!--  -->
                         </fd-bar-element>
                     </fd-bar-right>
                 </fd-bar>

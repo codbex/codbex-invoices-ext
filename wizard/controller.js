@@ -34,7 +34,7 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
 
     $scope.forms = {
         purchaseinvoice: {},
-        record: {}
+        item: {}
     };
 
     $scope.optionsSupplier = [];
@@ -46,15 +46,16 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
     $scope.optionsProduct = [];
     $scope.optionsUoM = [];
 
-    $scope.isFormValid = function () {
-        if ($scope.forms.wizard) {
-            if ($scope.forms.wizard.$valid === true || $scope.forms.wizard.$valid === undefined) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
+    $scope.steps = [
+        { id: 1, name: "Create a Purchase Invoice", topicId: "template.widgets.screeen.one" },
+        { id: 2, name: "Create  Items", topicId: "template.widgets.screeen.two" }
+    ];
+    $scope.currentStep = $scope.steps[0];
+
+    $scope.wizard = {
+        currentStep: 1,
+        completedSteps: 0,
+        stepsCount: 2
     };
 
     $http.get("/services/ts/codbex-partners/gen/api/Suppliers/SupplierService.ts").then((response) => {
@@ -106,16 +107,21 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
         })
     })
 
-    $scope.steps = [
-        { id: 1, name: "Create a Purchase Invoice", topicId: "template.widgets.screeen.one" }
-    ];
-    $scope.currentStep = $scope.steps[0];
-    $scope.records = [];
-
-    $scope.wizard = {
-        currentStep: 1,
-        completedSteps: 0,
-        stepsCount: 1
+    $scope.isFormValid = function () {
+        switch ($scope.wizard.currentStep) {
+            case 1:
+                if ($scope.forms.purchaseinvoice) {
+                    return $scope.forms.purchaseinvoice.$valid === true ||
+                        $scope.forms.purchaseinvoice.$valid === undefined
+                }
+                return false;
+            case 2:
+                if ($scope.forms.item) {
+                    return $scope.forms.item.$valid === true ||
+                        $scope.forms.item.$valid === undefined
+                }
+                return false;
+        }
     };
 
     $scope.revert = function (completedStepsCount) {
@@ -167,21 +173,6 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
         onMCBChange: function () {
             console.log($scope.combobox.selectedModelValues);
         }
-    };
-
-    $scope.createNewRecordPage = function () {
-        $scope.entity[`Product_${$scope.records.length}`] = null;
-        $scope.entity[`Quantity_${$scope.records.length}`] = null;
-        $scope.entity[`UoM_${$scope.records.length}`] = null;
-        $scope.entity[`Price_${$scope.records.length}`] = null;
-
-        $scope.records.push({ Product: '', Quantity: '', UoM: '', Price: '' });
-        $scope.steps.push({ id: $scope.steps.length, name: "Create a Purchase Invoice Item", topicId: `template.widgets.screeen.${$scope.steps.length}` });
-        $scope.wizard.stepsCount++;
-
-        // Set the current step to the newly added step
-        $scope.gotoNextStep();
-        console.log($scope.wizard);
     };
 
     //-----------------Events-------------------//
