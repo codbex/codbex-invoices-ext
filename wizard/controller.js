@@ -53,7 +53,7 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
     $scope.currentStep = $scope.steps[0];
 
     $scope.wizard = {
-        currentStep: 1,
+        currentStep: 2,
         completedSteps: 0,
         stepsCount: 2
     };

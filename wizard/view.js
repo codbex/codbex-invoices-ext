@@ -6,7 +6,6 @@ exports.getAction = function () {
         view: "PurchaseInvoice",
         type: "page",
         link: '/services/web/codbex-invoices-ext/wizard/wizard.html',
-        dgViewTitle: "pesho"
     }
 }
 

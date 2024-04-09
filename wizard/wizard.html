@@ -180,6 +180,77 @@
                                 </fd-step-input>
                             </fd-form-item>
                         </fd-fieldset>
+                        <fd-bar-right>
+                            <fd-button state="{{ isFormValid() ? '' : 'disabled'}}" dg-label="Add" dg-type="emphasized"
+                                compact="true" ng-click="isLastStep() ? finish() : gotoNextStep()">
+                            </fd-button>
+                        </fd-bar-right>
+                        <table fd-table display-mode="compact" inner-borders="top" outer-borders="none">
+                            <thead fd-table-header sticky="true">
+                                <tr fd-table-row>
+                                    <th fd-table-header-cell>Product</th>
+                                    <th fd-table-header-cell>Quantity</th>
+                                    <th fd-table-header-cell>UoM</th>
+                                    <th fd-table-header-cell>Price</th>
+                                    <th fd-table-header-cell>Net</th>
+                                    <th fd-table-header-cell>VAT</th>
+                                    <th fd-table-header-cell>Gross</th>
+                                </tr>
+                            </thead>
+                            <tbody fd-table-body>
+                                <tr fd-table-row hoverable="true" ng-show="data.length == 0">
+                                    <td fd-table-cell no-data="true">No data available.</td>
+                                </tr>
+                                <tr fd-table-row hoverable="true" ng-repeat="next in data"
+                                    dg-selected="next.Id === selectedEntity.Id" ng-click="selectEntity(next)">
+                                    <td fd-table-cell ng-click="openDetails(next)" hoverable="true" activable="true">
+                                        {{optionsProductValue(next.Product)}}
+                                    </td>
+                                    <td fd-table-cell ng-click="openDetails(next)" hoverable="true" activable="true">
+                                        {{next.Quantity}}
+                                    </td>
+                                    <td fd-table-cell ng-click="openDetails(next)" hoverable="true" activable="true">
+                                        {{optionsUoMValue(next.UoM)}}
+                                    </td>
+                                    <td fd-table-cell ng-click="openDetails(next)" hoverable="true" activable="true">
+                                        {{next.Price}}
+                                    </td>
+                                    <td fd-table-cell ng-click="openDetails(next)" hoverable="true" activable="true">
+                                        {{next.Net}}
+                                    </td>
+                                    <td fd-table-cell ng-click="openDetails(next)" hoverable="true" activable="true">
+                                        {{next.VAT}}
+                                    </td>
+                                    <td fd-table-cell ng-click="openDetails(next)" hoverable="true" activable="true">
+                                        {{next.Gross}}
+                                    </td>
+                                    <td fd-table-cell fit-content="true">
+                                        <fd-popover>
+                                            <fd-popover-control>
+                                                <fd-button compact="true" glyph="sap-icon--overflow"
+                                                    dg-type="transparent" aria-label="Table Row Menu Button"
+                                                    ng-click="setTristate()">
+                                                </fd-button>
+                                            </fd-popover-control>
+                                            <fd-popover-body dg-align="bottom-right">
+                                                <fd-menu aria-label="Table Row Menu" no-backdrop="true"
+                                                    no-shadow="true">
+                                                    <fd-menu-item ng-repeat="action in entityActions"
+                                                        title="{{action.label}}" ng-click="triggerEntityAction(action)">
+                                                    </fd-menu-item>
+                                                    <fd-menu-item title="View Details" ng-click="openDetails(next)">
+                                                    </fd-menu-item>
+                                                    <fd-menu-item title="Edit" ng-click="updateEntity(next)">
+                                                    </fd-menu-item>
+                                                    <fd-menu-item title="Delete" ng-click="deleteEntity(next)">
+                                                    </fd-menu-item>
+                                                </fd-menu>
+                                            </fd-popover-body>
+                                        </fd-popover>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </fd-wizard-step>
                 <!---- All the records END---->
