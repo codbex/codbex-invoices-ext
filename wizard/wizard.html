@@ -139,15 +139,15 @@
                 </fd-wizard-step>
 
                 <!-- Records Page -->
-                <fd-wizard-step dg-size="md" ng-attr-dg-label="{{ 'Record ' + record.stepCount + ': Create a record' }}"
-                    ng-attr-indicator-label="{{ $index + 2 }}" step-click="gotoStep(record.stepCount)">
+                <fd-wizard-step dg-size="md" ng-attr-dg-label="Create Items" ng-attr-indicator-label="{{ $index + 2 }}"
+                    step-click="gotoStep(record.stepCount)">
                     <div id="create-component">
-                        <fd-fieldset ng-form="forms.record">
+                        <fd-fieldset ng-form="forms.item">
                             <fd-form-item horizontal="false">
                                 <fd-form-label for="idProduct" dg-required="true" dg-colon="true">Product
                                 </fd-form-label>
                                 <fd-combobox-input id="idProduct" name="Product"
-                                    state="{{ forms.record['Product'].$valid ? '' : 'error' }}" ng-required="true"
+                                    state="{{ forms.item['Product'].$valid ? '' : 'error' }}" ng-required="true"
                                     ng-model="entity.Product" dropdown-items="optionsProduct"
                                     dg-placeholder="Search Product ..." ng-readonly="action === 'select'">
                                 </fd-combobox-input>
@@ -156,7 +156,7 @@
                                 <fd-form-label for="idQuantity" dg-required="true" dg-colon="true">Quantity
                                 </fd-form-label>
                                 <fd-step-input dg-id="idQuantity" name="Quantity"
-                                    state="{{ forms.record['Quantity'].$valid ? '' : 'error' }}" dg-required="true"
+                                    state="{{ forms.item['Quantity'].$valid ? '' : 'error' }}" dg-required="true"
                                     ng-model="entity.Quantity" is-readonly="action === 'select'"
                                     placeholder="Enter Quantity">
                                 </fd-step-input>
@@ -165,7 +165,7 @@
                                 <fd-form-label for="idUoM" dg-required="true" dg-colon="true">UoM
                                 </fd-form-label>
                                 <fd-combobox-input id="idUoM" name="UoM"
-                                    state="{{ forms.record['UoM'].$valid ? '' : 'error' }}" ng-required="true"
+                                    state="{{ forms.item['UoM'].$valid ? '' : 'error' }}" ng-required="true"
                                     ng-model="entity.UoM" dropdown-items="optionsUoM" dg-placeholder="Search UoM ..."
                                     ng-readonly="action === 'select'">
                                 </fd-combobox-input>
@@ -174,7 +174,7 @@
                                 <fd-form-label for="idPrice" dg-required="true" dg-colon="true">Price
                                 </fd-form-label>
                                 <fd-step-input dg-id="idPrice" name="Price"
-                                    state="{{ forms.record['Price'].$valid ? '' : 'error' }}" dg-required="true"
+                                    state="{{ forms.item['Price'].$valid ? '' : 'error' }}" dg-required="true"
                                     ng-model="entity.Price" is-readonly=" action==='select'" placeholder=" Enter Price">
                                 </fd-step-input>
                             </fd-form-item>
@@ -213,8 +213,8 @@
                                     <td fd-table-cell>0</td>
                                     <td fd-table-cell>
                                         <fd-bar-right>
-                                            <fd-button state="{{ isFormValid() ? '' : 'disabled'}}" dg-label="Edit"
-                                                dg-type="emphasized" compact="true" ng-click="editItemInForm($index)">
+                                            <fd-button dg-label="Edit" dg-type="emphasized" compact="true"
+                                                ng-click="editItemInForm($index)">
                                             </fd-button>
                                         </fd-bar-right>
                                     </td>
@@ -239,9 +239,12 @@
                         </fd-bar-element>
                         <fd-bar-element>
                             <!-- state="{{ isFormValid() ? '' : 'disabled'}}" -->
-                            <fd-button state="{{ isFormValid() ? '' : 'disabled'}}" ng-if="!allStepsCompleted()"
-                                dg-label="{{ isLastStep() ? 'Finish' : 'Next' }}" dg-type="emphasized" compact="true"
-                                ng-click="isLastStep() ? finish() : gotoNextStep()">
+                            <fd-button state="{{ isFormValid() ? '' : 'disabled'}}"
+                                ng-if="!allStepsCompleted() && !isLastStep()" dg-label="Next" dg-type="emphasized"
+                                compact="true" ng-click="gotoNextStep()">
+                            </fd-button>
+                            <fd-button ng-if="!allStepsCompleted() && isLastStep()" dg-label="Finish"
+                                dg-type="emphasized" compact="true" ng-click="finish()">
                             </fd-button>
                             <!--  -->
                         </fd-bar-element>

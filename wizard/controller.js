@@ -8,12 +8,6 @@ widgetsView.config(["entityApiProvider", function (entityApiProvider) {
     entityApiProvider.baseUrl = "/services/ts/codbex-invoices/gen/api/purchaseinvoice/PurchaseInvoiceService.ts";
 }])
 
-// }
-// $scope.dijest()
-// $scope.apply() **
-
-// Initialize controller
-
 widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub', 'entityApi', function ($scope, $http, messageHub, entityApi) {
 
     $scope.entity = {
@@ -53,11 +47,13 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
     $scope.currentStep = $scope.steps[0];
 
     $scope.wizard = {
-        currentStep: 2,
+        currentStep: 1,
         completedSteps: 0,
         stepsCount: 2
     };
 
+    //* if null the edit mode is NOT active
+    //* else the edit index is saved in it
     $scope.editModeIndex = null;
     $scope.items = []
 
@@ -130,22 +126,19 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
     $scope.editItemInForm = function (index) {
         let item = $scope.items[index]
 
-        // angular.extend($scope.entity, item);
+        angular.extend($scope.entity, item);
 
-        $scope.entity.Product = item.Product;
-        $scope.entity.Quantity = item.Quantity;
-        $scope.entity.UoM = item.UoM;
-        $scope.entity.Price = item.Price;
+        // $scope.entity.Product = item.Product;
+        // $scope.entity.Quantity = item.Quantity;
+        // $scope.entity.UoM = item.UoM;
+        // $scope.entity.Price = item.Price;
 
         $scope.editModeIndex = index;
     }
 
     $scope.editSubmit = function () {
         let item = $scope.getItemFromForm()
-        debugger
-        // $scope.$apply(() => {
         $scope.items[$scope.editModeIndex] = item;
-        // })
 
         $scope.editModeIndex = null;
 
@@ -154,9 +147,7 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
 
     $scope.addSubmit = function () {
         let item = $scope.getItemFromForm();
-        debugger
         $scope.items.push(item);
-
         $scope.clearItemForm();
     }
 
