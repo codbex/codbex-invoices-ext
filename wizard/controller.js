@@ -26,7 +26,7 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
         PurchaseinvoiceStatus: null,
         Operator: null,
 
-        Products: [],
+        Product: null,
         Quantity: null,
         UoM: null,
         Price: null
@@ -57,6 +57,10 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
         completedSteps: 0,
         stepsCount: 2
     };
+
+    $scope.editModeIndex = null;
+    $scope.items = []
+
 
     $http.get("/services/ts/codbex-partners/gen/api/Suppliers/SupplierService.ts").then((response) => {
         $scope.optionsSupplier = response.data.map(function (supplier) {
@@ -106,6 +110,55 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
             return { value: UoM.Id, text: UoM.Name };
         })
     })
+
+    $scope.isEditMode = function () {
+        return $scope.editModeIndex !== null;
+    }
+
+    $scope.clearItemForm = function () {
+        $scope.entity.Product = null;
+        $scope.entity.Quantity = null;
+        $scope.entity.UoM = null;
+        $scope.entity.Price = null;
+    }
+
+    $scope.getItemFromForm = function () {
+        const { Product, Quantity, UoM, Price } = $scope.entity;
+        return { Product, Quantity, UoM, Price };
+    }
+
+    $scope.editItemInForm = function (index) {
+        let item = $scope.items[index]
+
+        // angular.extend($scope.entity, item);
+
+        $scope.entity.Product = item.Product;
+        $scope.entity.Quantity = item.Quantity;
+        $scope.entity.UoM = item.UoM;
+        $scope.entity.Price = item.Price;
+
+        $scope.editModeIndex = index;
+    }
+
+    $scope.editSubmit = function () {
+        let item = $scope.getItemFromForm()
+        debugger
+        // $scope.$apply(() => {
+        $scope.items[$scope.editModeIndex] = item;
+        // })
+
+        $scope.editModeIndex = null;
+
+        $scope.clearItemForm();
+    }
+
+    $scope.addSubmit = function () {
+        let item = $scope.getItemFromForm();
+        debugger
+        $scope.items.push(item);
+
+        $scope.clearItemForm();
+    }
 
     $scope.isFormValid = function () {
         switch ($scope.wizard.currentStep) {
