@@ -1,5 +1,0 @@
-{
-    "extensionPoint": "codbex-invoices-dialog-window",
-    "module": "codbex-invoices-ext/wizard/view.js",
-    "description": "Wizard"
-}
