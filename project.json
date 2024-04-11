@@ -1,1 +1,11 @@
-{"guid":"codbex-invoices-ext"}
+{
+    "guid": "codbex-invoices-ext",
+    "dependencies": [
+        {
+            "guid": "codbex-invoices",
+            "type": "git",
+            "url": "https://github.com/codbex/codbex-invoices.git",
+            "branch": "main"
+        }
+    ]
+}
