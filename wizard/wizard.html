@@ -168,8 +168,8 @@
                         <br>
                         <fd-bar-right>
                             <fd-button state="{{ isFormValid() ? '' : 'disabled'}}"
-                                dg-label="{{isEditMode() ? 'Submit' : 'Add'}}" dg-type="emphasized" compact="true"
-                                ng-click="isEditMode() ? editSubmit() : addSubmit()">
+                                dg-label="{{isEditMode() ? 'Update' : 'Add'}}" dg-type="emphasized" compact="true"
+                                ng-click="isEditMode() ? updateSubmit() : addSubmit()">
                             </fd-button>
                         </fd-bar-right>
                         <table fd-table display-mode="compact" inner-borders="top" outer-borders="none">
@@ -179,9 +179,6 @@
                                     <th fd-table-header-cell>Quantity</th>
                                     <th fd-table-header-cell>UoM</th>
                                     <th fd-table-header-cell>Price</th>
-                                    <th fd-table-header-cell>Net</th>
-                                    <th fd-table-header-cell>VAT</th>
-                                    <th fd-table-header-cell>Gross</th>
                                     <th fd-table-header-cell></th>
                                 </tr>
                             </thead>
@@ -194,13 +191,13 @@
                                     <td fd-table-cell>{{item.Quantity}}</td>
                                     <td fd-table-cell>{{optionsUoM[item.UoM - 1].text}}</td>
                                     <td fd-table-cell>{{item.Price}}</td>
-                                    <td fd-table-cell>0</td>
-                                    <td fd-table-cell>0</td>
-                                    <td fd-table-cell>0</td>
                                     <td fd-table-cell>
                                         <fd-bar-right>
                                             <fd-button dg-label="Edit" dg-type="emphasized" compact="true"
                                                 ng-click="editItemInForm($index)">
+                                            </fd-button>
+                                            <fd-button dg-label="Delete" dg-type="emphasized" compact="true"
+                                                ng-click="deleteItemInForm($index)">
                                             </fd-button>
                                         </fd-bar-right>
                                     </td>

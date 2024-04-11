@@ -125,23 +125,19 @@ wizardDialog.controller('WizardController', ['$scope', '$http', 'messageHub', 'e
 
     $scope.editItemInForm = function (index) {
         let item = $scope.items[index]
-
         angular.extend($scope.entity, item);
-
-        // $scope.entity.Product = item.Product;
-        // $scope.entity.Quantity = item.Quantity;
-        // $scope.entity.UoM = item.UoM;
-        // $scope.entity.Price = item.Price;
-
         $scope.editModeIndex = index;
     }
 
-    $scope.editSubmit = function () {
+    $scope.deleteItemInForm = function (index) {
+        $scope.items.splice(index, 1);
+    }
+
+    $scope.updateSubmit = function () {
         let item = $scope.getItemFromForm()
         $scope.items[$scope.editModeIndex] = item;
 
         $scope.editModeIndex = null;
-
         $scope.clearItemForm();
     }
 
