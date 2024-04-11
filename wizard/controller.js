@@ -1,14 +1,14 @@
-let widgetsView = angular.module('widgets', ['ideUI', 'ideView', "entityApi"]);
+const wizardDialog = angular.module('wizard', ['ideUI', 'ideView', "entityApi"]);
 
-widgetsView.config(["messageHubProvider", function (messageHubProvider) {
-    messageHubProvider.eventIdPrefix = 'template';
+wizardDialog.config(["messageHubProvider", function (messageHubProvider) {
+    messageHubProvider.eventIdPrefix = 'wizard';
 }]);
 
-widgetsView.config(["entityApiProvider", function (entityApiProvider) {
+wizardDialog.config(["entityApiProvider", function (entityApiProvider) {
     entityApiProvider.baseUrl = "/services/ts/codbex-invoices/gen/api/purchaseinvoice/PurchaseInvoiceService.ts";
 }])
 
-widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub', 'entityApi', function ($scope, $http, messageHub, entityApi) {
+wizardDialog.controller('WizardController', ['$scope', '$http', 'messageHub', 'entityApi', function ($scope, $http, messageHub, entityApi) {
 
     $scope.entity = {
         Date: null,
@@ -245,11 +245,3 @@ widgetsView.controller('WidgetsViewController', ['$scope', '$http', 'messageHub'
         });
     };
 }]);
-
-
-widgetsView.filter('startFrom', function () {
-    return function (input, start) {
-        start = +start; //parse to int
-        return input.slice(start);
-    }
-});

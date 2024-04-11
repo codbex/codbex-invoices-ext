@@ -1,29 +1,15 @@
 <!DOCTYPE HTML>
-<!--
-  ~ Copyright (c) 2010-2023 SAP and others.
-  ~ All rights reserved. This program and the accompanying materials
-  ~ are made available under the terms of the Eclipse Public License v2.0
-  ~ which accompanies this distribution, and is available at
-  ~ http://www.eclipse.org/legal/epl-v20.html
-  ~ Contributors:
-  ~ SAP - initial API and implementation
-  -->
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="widgets" ng-controller="WidgetsViewController">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="wizard" ng-controller="WizardController">
 
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Fake favicon to silent console errors and not waste a get request -->
         <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
-        <!-- Title directive -->
         <title dg-view-title></title>
-        <!-- View data -->
-        <script type="text/javascript" src="view.js"></script>
-        <!-- IDE Core UI -->
+        <script type="text/javascript" src="services/wizard-dialog.js"></script>
         <script type="text/javascript" src="/services/js/resources-core/services/loader.js?id=ide-view-js"></script>
         <link type="text/css" rel="stylesheet" href="/services/js/resources-core/services/loader.js?id=ide-view-css" />
         <theme></theme>
-        <!-- Project-specific stuff -->
         <script type="text/javascript" src="controller.js"></script>
     </head>
 
@@ -230,10 +216,10 @@
                 </fd-wizard-summary>
             </fd-wizard-content>
             <footer>
-                <fd-bar bar-design="footer" in-page="true" size="m_l">
+                <fd-bar bar-design="footer" in-page="true" compact="true">
                     <fd-bar-right>
                         <fd-bar-element>
-                            <fd-button ng-if="!allStepsCompleted() && !isFirstStep()" dg-label="Previous" compact="true"
+                            <fd-button ng-if="!allStepsCompleted() && !isFirstStep()" dg-label="Previous"
                                 ng-click="gotoPreviousStep()">
                             </fd-button>
                         </fd-bar-element>
@@ -241,10 +227,10 @@
                             <!-- state="{{ isFormValid() ? '' : 'disabled'}}" -->
                             <fd-button state="{{ isFormValid() ? '' : 'disabled'}}"
                                 ng-if="!allStepsCompleted() && !isLastStep()" dg-label="Next" dg-type="emphasized"
-                                compact="true" ng-click="gotoNextStep()">
+                                ng-click="gotoNextStep()">
                             </fd-button>
                             <fd-button ng-if="!allStepsCompleted() && isLastStep()" dg-label="Finish"
-                                dg-type="emphasized" compact="true" ng-click="finish()">
+                                dg-type="emphasized" ng-click="finish()">
                             </fd-button>
                             <!--  -->
                         </fd-bar-element>
