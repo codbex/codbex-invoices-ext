@@ -1,0 +1,5 @@
+{
+    "module": "codbex-invoices-ext/wizard/services/wizard-dialog.js",
+    "extensionPoint": "codbex-invoices-custom-action",
+    "description": "Wizard dialog window"
+}

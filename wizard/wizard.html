@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="wizard" ng-controller="WizardController">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=">
+        <title dg-view-title></title>
+        <script type="text/javascript" src="services/wizard-dialog.js"></script>
+        <script type="text/javascript" src="/services/js/resources-core/services/loader.js?id=ide-view-js"></script>
+        <link type="text/css" rel="stylesheet" href="/services/js/resources-core/services/loader.js?id=ide-view-css" />
+        <theme></theme>
+        <script type="text/javascript" src="controller.js"></script>
+    </head>
+
+    <body class="dg-vbox">
+        <fd-wizard class="dg-flex--wizard dg-full-height" dg-size="md" current-step="wizard.currentStep"
+            completed-steps="wizard.completedSteps">
+            <header>
+                <fd-bar bar-design="header-with-subheader" cozy="true" in-page="true" size="m_l">
+                    <fd-bar-left>
+                        <fd-bar-element>
+                            <h1 fd-title header-size="3">Wizard for PurchaseInvoice</h1>
+                        </fd-bar-element>
+                    </fd-bar-left>
+                </fd-bar>
+                <fd-wizard-navigation></fd-wizard-navigation>
+            </header>
+            <fd-wizard-content fd-scrollbar dg-size="md" style="min-height: 300px;" class="wizard-content">
+                <fd-wizard-step dg-size="md" dg-label="Create Purchaseinvoice " indicator-label="1"
+                    indicator-glyph="{{ getIndicatorGlyph(wizard.currentStep.id) }}"
+                    step-click="gotoStep(wizard.currentStep)">
+                    <div class="create-component">
+                        <fd-fieldset ng-form="forms.purchaseinvoice">
+                            <fd-form-group>
+                                <fd-form-item>
+                                    <fd-form-label for="idDate" dg-required="true" dg-colon="true">Date
+                                    </fd-form-label>
+                                    <fd-form-input-message-group
+                                        dg-inactive="{{ forms.purchaseinvoice['Date'].$valid }}">
+                                        <fd-input id="idDate" name="Date"
+                                            state="{{ forms.purchaseinvoice['Date'].$valid ? '' : 'error' }}"
+                                            ng-required="true" ng-model="entity.Date" ng-readonly="action === 'select'"
+                                            type="date">
+                                        </fd-input>
+                                        <fd-form-message dg-type="error">Incorrect Input</fd-form-message>
+                                    </fd-form-input-message-group>
+                                </fd-form-item>
+                                <fd-form-item>
+                                    <fd-form-label for="idDue" dg-required="true" dg-colon="true">Due
+                                    </fd-form-label>
+                                    <fd-form-input-message-group
+                                        dg-inactive="{{ forms.purchaseinvoice['Due'].$valid }}">
+                                        <fd-input id="idDue" name="Due"
+                                            state="{{ forms.purchaseinvoice['Due'].$valid ? '' : 'error' }}"
+                                            ng-required="true" ng-model="entity.Due" ng-readonly="action === 'select'"
+                                            type="date">
+                                        </fd-input>
+                                        <fd-form-message dg-type="error">Incorrect Input</fd-form-message>
+                                    </fd-form-input-message-group>
+                                </fd-form-item>
+                                <fd-form-item horizontal="false">
+                                    <fd-form-label for="idSupplier" dg-required="true" dg-colon="true">Supplier
+                                    </fd-form-label>
+                                    <fd-combobox-input id="idSupplier" name="Supplier"
+                                        state="{{ forms.purchaseinvoice['Supplier'].$valid ? '' : 'error' }}"
+                                        ng-required="true" ng-model="entity.Supplier" dropdown-items="optionsSupplier"
+                                        dg-placeholder="Search Supplier ..." ng-readonly="action === 'select'">
+                                    </fd-combobox-input>
+                                </fd-form-item>
+                                <fd-form-item>
+                                    <fd-form-label for="idCurrency" dg-required="true" dg-colon="true">Currency
+                                    </fd-form-label>
+                                    <fd-combobox-input id="idCurrency" name="Currency"
+                                        state="{{ forms.purchaseinvoice['Currency'].$valid ? '' : 'error' }}"
+                                        ng-required="true" ng-model="entity.Currency" dropdown-items="optionsCurrency"
+                                        dg-placeholder="Search Currency ..." ng-readonly="action === 'select'">
+                                    </fd-combobox-input>
+                                </fd-form-item>
+                                <fd-form-item>
+                                    <fd-form-label for="idPaymentMethod" dg-required="true" dg-colon="true">
+                                        PaymentMethod
+                                    </fd-form-label>
+                                    <fd-combobox-input id="idPaymentMethod" name="PaymentMethod"
+                                        state="{{ forms.purchaseinvoice['PaymentMethod'].$valid ? '' : 'error' }}"
+                                        ng-required="true" ng-model="entity.PaymentMethod"
+                                        dropdown-items="optionsPaymentMethod" dg-placeholder="Search PaymentMethod ..."
+                                        ng-readonly="action === 'select'">
+                                    </fd-combobox-input>
+                                </fd-form-item>
+                                <fd-form-item>
+                                    <fd-form-label for="idSentMethod" dg-required="true" dg-colon="true">SentMethod
+                                    </fd-form-label>
+                                    <fd-combobox-input id="idSentMethod" name="SentMethod"
+                                        state="{{ forms.purchaseinvoice['SentMethod'].$valid ? '' : 'error' }}"
+                                        ng-required="true" ng-model="entity.SentMethod"
+                                        dropdown-items="optionsSentMethod" dg-placeholder="Search SentMethod ..."
+                                        ng-readonly="action === 'select'">
+                                    </fd-combobox-input>
+                                </fd-form-item>
+                                <fd-form-item>
+                                    <fd-form-label for="idPurchaseinvoiceStatus" dg-required="true" dg-colon="true">
+                                        PurchaseinvoiceStatus
+                                    </fd-form-label>
+                                    <fd-combobox-input id="idPurchaseinvoiceStatus" name="PurchaseinvoiceStatus"
+                                        state="{{ forms.purchaseinvoice['PurchaseinvoiceStatus'].$valid ? '' : 'error' }}"
+                                        ng-required="true" ng-model="entity.PurchaseinvoiceStatus"
+                                        dropdown-items="optionsPurchaseinvoiceStatus"
+                                        dg-placeholder="Search PurchaseinvoiceStatus ..."
+                                        ng-readonly="action === 'select'">
+                                    </fd-combobox-input>
+                                </fd-form-item>
+                                <fd-form-item>
+                                    <fd-form-label for="idOperator" dg-required="true" dg-colon="true">Operator
+                                    </fd-form-label>
+                                    <fd-combobox-input id="idOperator" name="Operator"
+                                        state="{{ forms.purchaseinvoice['Operator'].$valid ? '' : 'error' }}"
+                                        ng-required="true" ng-model="entity.Operator" dropdown-items="optionsOperator"
+                                        dg-placeholder="Search Operator ..." ng-readonly="action === 'select'">
+                                    </fd-combobox-input>
+                                </fd-form-item>
+                            </fd-form-group>
+                        </fd-fieldset>
+                    </div>
+                </fd-wizard-step>
+
+                <!-- Records Page -->
+                <fd-wizard-step dg-size="md" ng-attr-dg-label="Create Items" ng-attr-indicator-label="{{ $index + 2 }}"
+                    step-click="gotoStep(record.stepCount)">
+                    <div id="create-component">
+                        <fd-fieldset ng-form="forms.item">
+                            <fd-form-item horizontal="false">
+                                <fd-form-label for="idProduct" dg-required="true" dg-colon="true">Product
+                                </fd-form-label>
+                                <fd-combobox-input id="idProduct" name="Product"
+                                    state="{{ forms.item['Product'].$valid ? '' : 'error' }}" ng-required="true"
+                                    ng-model="entity.Product" dropdown-items="optionsProduct"
+                                    dg-placeholder="Search Product ..." ng-readonly="action === 'select'">
+                                </fd-combobox-input>
+                            </fd-form-item>
+                            <fd-form-item horizontal="false">
+                                <fd-form-label for="idQuantity" dg-required="true" dg-colon="true">Quantity
+                                </fd-form-label>
+                                <fd-step-input dg-id="idQuantity" name="Quantity"
+                                    state="{{ forms.item['Quantity'].$valid ? '' : 'error' }}" dg-required="true"
+                                    ng-model="entity.Quantity" is-readonly="action === 'select'"
+                                    placeholder="Enter Quantity">
+                                </fd-step-input>
+                            </fd-form-item>
+                            <fd-form-item horizontal="false">
+                                <fd-form-label for="idUoM" dg-required="true" dg-colon="true">UoM
+                                </fd-form-label>
+                                <fd-combobox-input id="idUoM" name="UoM"
+                                    state="{{ forms.item['UoM'].$valid ? '' : 'error' }}" ng-required="true"
+                                    ng-model="entity.UoM" dropdown-items="optionsUoM" dg-placeholder="Search UoM ..."
+                                    ng-readonly="action === 'select'">
+                                </fd-combobox-input>
+                            </fd-form-item>
+                            <fd-form-item horizontal="false">
+                                <fd-form-label for="idPrice" dg-required="true" dg-colon="true">Price
+                                </fd-form-label>
+                                <fd-step-input dg-id="idPrice" name="Price"
+                                    state="{{ forms.item['Price'].$valid ? '' : 'error' }}" dg-required="true"
+                                    ng-model="entity.Price" is-readonly=" action==='select'" placeholder=" Enter Price">
+                                </fd-step-input>
+                            </fd-form-item>
+                        </fd-fieldset>
+                        <br>
+                        <fd-bar-right>
+                            <fd-button state="{{ isFormValid() ? '' : 'disabled'}}"
+                                dg-label="{{isEditMode() ? 'Update' : 'Add'}}" dg-type="emphasized" compact="true"
+                                ng-click="isEditMode() ? updateSubmit() : addSubmit()">
+                            </fd-button>
+                        </fd-bar-right>
+                        <table fd-table display-mode="compact" inner-borders="top" outer-borders="none">
+                            <thead fd-table-header sticky="true">
+                                <tr fd-table-row>
+                                    <th fd-table-header-cell>Product</th>
+                                    <th fd-table-header-cell>Quantity</th>
+                                    <th fd-table-header-cell>UoM</th>
+                                    <th fd-table-header-cell>Price</th>
+                                    <th fd-table-header-cell></th>
+                                </tr>
+                            </thead>
+                            <tbody fd-table-body>
+                                <tr fd-table-row hoverable="true" ng-show="data.length == 0">
+                                    <td fd-table-cell no-data="true">No data available.</td>
+                                </tr>
+                                <tr fd-table-row hoverable="true" ng-repeat="item in items track by $index">
+                                    <td fd-table-cell>{{optionsProduct[item.Product - 1].text}}</td>
+                                    <td fd-table-cell>{{item.Quantity}}</td>
+                                    <td fd-table-cell>{{optionsUoM[item.UoM - 1].text}}</td>
+                                    <td fd-table-cell>{{item.Price}}</td>
+                                    <td fd-table-cell>
+                                        <fd-bar-right>
+                                            <fd-button dg-label="Edit" dg-type="emphasized" compact="true"
+                                                ng-click="editItemInForm($index)">
+                                            </fd-button>
+                                            <fd-button dg-label="Delete" dg-type="emphasized" compact="true"
+                                                ng-click="deleteItemInForm($index)">
+                                            </fd-button>
+                                        </fd-bar-right>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fd-wizard-step>
+                <!---- All the records END---->
+
+                <fd-wizard-summary>
+                    <div>Summary content</div>
+                </fd-wizard-summary>
+            </fd-wizard-content>
+            <footer>
+                <fd-bar bar-design="footer" in-page="true" compact="true">
+                    <fd-bar-right>
+                        <fd-bar-element>
+                            <fd-button ng-if="!allStepsCompleted() && !isFirstStep()" dg-label="Previous"
+                                ng-click="gotoPreviousStep()">
+                            </fd-button>
+                        </fd-bar-element>
+                        <fd-bar-element>
+                            <!-- state="{{ isFormValid() ? '' : 'disabled'}}" -->
+                            <fd-button state="{{ isFormValid() ? '' : 'disabled'}}"
+                                ng-if="!allStepsCompleted() && !isLastStep()" dg-label="Next" dg-type="emphasized"
+                                ng-click="gotoNextStep()">
+                            </fd-button>
+                            <fd-button ng-if="!allStepsCompleted() && isLastStep()" dg-label="Finish"
+                                dg-type="emphasized" ng-click="finish()">
+                            </fd-button>
+                            <!--  -->
+                        </fd-bar-element>
+                    </fd-bar-right>
+                </fd-bar>
+            </footer>
+        </fd-wizard>
+    </body>
+
+</html>
